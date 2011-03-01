@@ -6,6 +6,12 @@ use HTML::Entities;
 my $url=$ARGV[0];
 my $outdir=$ARGV[1];
 my $count=$ARGV[2];
+if(!defined($count)) {
+    $count = 3;
+}
+if (!defined($outdir)) {
+    print "usage: rss2torrent 'http://rss.url/path' /download/dir [number of torrents to get]\n";
+}
 print "Downloading $count torrents into $outdir from $url\n";
 my $rss=\%rss;
 my $data = get($url);
