@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/rss2torrent.t
+lib/rss2torrent.pm
