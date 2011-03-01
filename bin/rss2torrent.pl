@@ -11,6 +11,7 @@ if(!defined($count)) {
 }
 if (!defined($outdir)) {
     print "usage: rss2torrent 'http://rss.url/path' /download/dir [number of torrents to get]\n";
+    exit;
 }
 print "Downloading $count torrents into $outdir from $url\n";
 my $rss=\%rss;
