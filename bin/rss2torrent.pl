@@ -22,7 +22,7 @@ foreach my $item (@$items) {
     my $filename = sanitize($item->{'title'}) . '.torrent';
     my $torrent_url = HTML::Entities::decode($item->{'link'});
     print "Downloading $torrent_url into $filename\n";
-    getstore($torrent_url, $outdir . '/' . $filename);
+    mirror($torrent_url, $outdir . '/' . $filename);
     if($count <= 1 ) {exit;}
     --$count;
     print "\n";
