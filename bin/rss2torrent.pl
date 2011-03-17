@@ -40,7 +40,7 @@ while ( my($feed_url, $feed_cfg) = each(%$rss) ) {
     if (defined($feed_cfg->{'keep'})) {
 	$count = $feed_cfg->{'keep'};
     }
-    print "Downloading $feed_cfg->{'name'}: $count torrents from $torrent_url\n";
+    print "Downloading $feed_cfg->{'name'}: $count torrents from $feed_url\n";
     my %rss;
     my $rss = \%rss;
     my $data = get($feed_url);
