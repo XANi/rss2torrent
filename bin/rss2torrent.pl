@@ -45,7 +45,14 @@ while ( my($feed_url, $feed_cfg) = each(%$rss) ) {
     my $rss = \%rss;
     my $data = get($feed_url);
     parseRSS($rss, \$data);
-    my $items = $rss->{'item'};
+    my $items;
+    if (ref($rss->{'item'}) eq 'ARRAY') {
+       $items = $rss->{'item'};
+    }
+    else {
+       my @a = ($rss->{'item'});
+       $items = \@a;
+    }
     foreach my $item (@$items) {
 	my $filename = sanitize($item->{'title'}) . '.torrent';
 	my $torrent_url = HTML::Entities::decode($item->{'link'});
@@ -55,7 +62,7 @@ while ( my($feed_url, $feed_cfg) = each(%$rss) ) {
 	    print "\n";
 	    $cache->{$filename} = scalar time;
 	} else {
-	    print "we downloaded that already, skipping\n"
+	    print "we downloaded $filename already, skipping\n"
 	}
 	--$count;
 	if($count <= 0 ) {last;}
