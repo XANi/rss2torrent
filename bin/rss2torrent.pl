@@ -34,7 +34,7 @@ if ( -e $cachefile ) {
 
 }
 my $rss     = $cfg->{'rss'};
-my $exclude = $cfg->{'exclude'};
+my $exclude = $cfg->{'config'}{'exclude'};
 while ( my ( $feed_url, $feed_cfg ) = each(%$rss) ) {
     my $feed_c = 0;
     my $count  = 3;
