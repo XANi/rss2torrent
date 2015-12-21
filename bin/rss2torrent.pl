@@ -16,10 +16,8 @@ my $c = new Config::General(-ConfigFile => glob("~/.rss2torrent.conf"),
                          -MergeDuplicateOptions => 'true',
                          -AllowMultiOptions => 'true'
     );
-my $cache;
 my %cfg_tmp = $c->getall();
 my $cfg = \%cfg_tmp;
-#my %cache;
 my $cache = {};
 my $cachefile = glob($cfg->{'config'}{'cachefile'});
 if ( -e $cachefile ) {
@@ -31,9 +29,10 @@ if ( -e $cachefile ) {
     close(CACHE);
     $cache=$json->decode($tmp);
     print "Cache from $cachefile loaded \n";
-    
+
 }
 my $rss=$cfg->{'rss'};
+my $exclude = $cfg->{'exclude'};
 while ( my($feed_url, $feed_cfg) = each(%$rss) ) {
     my $feed_c = 0;
     my $count = 3;
@@ -57,6 +56,12 @@ while ( my($feed_url, $feed_cfg) = each(%$rss) ) {
 	my $filename = sanitize($item->{'title'}) . '.torrent';
 	my $torrent_url = HTML::Entities::decode($item->{'link'});
 	if ( !defined( $cache->{$filename} ) ) {
+        if ( defined($exclude) || $exclude !~ /^\s*$/) {
+            if ($torrent_url =~ /$exclude/) {
+                print "Excluding $torrent_url,  matches exclude [$exclude]\n";
+                next;
+            }
+        }
 	    print "Downloading $torrent_url into $filename\n";
 	    mirror($torrent_url, $cfg->{'config'}{'download_dir'} . '/' . $filename);
 	    print "\n";
