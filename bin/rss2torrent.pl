@@ -59,7 +59,7 @@ while ( my ( $feed_url, $feed_cfg ) = each(%$rss) ) {
         my $torrent_url = HTML::Entities::decode( $item->{'link'} );
         if ( !defined( $cache->{$filename} ) ) {
             if ( defined($exclude) || $exclude !~ /^\s*$/ ) {
-                if ( $torrent_url =~ /$exclude/ ) {
+                if ( $torrent_url =~ /$exclude/i ) {
                     print
                       "Excluding $torrent_url,  matches exclude [$exclude]\n";
                     next;
